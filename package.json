@@ -3,9 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3-shape": "^1.2.2",
+    "downshift": "^3.1.5",
+    "jwt-decode": "^2.2.0",
     "react": "^16.6.1",
+    "react-autocomplete": "^1.8.1",
     "react-dom": "^16.6.1",
-    "react-scripts": "2.1.1"
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-select": "^2.1.1",
+    "react-vis": "^1.11.4",
+    "react-widgets": "^4.4.6",
+    "redux": "^4.0.1",
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

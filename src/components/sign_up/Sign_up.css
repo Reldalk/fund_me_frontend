@@ -1,0 +1,72 @@
+.sign_up_center_box{
+  position:fixed; /* change this to fixed */
+  top: 50%;
+  left: 50%;
+  margin-left: -13em;
+  width: 26em;
+  height: 30em;
+}
+
+.sign_up_text_description{
+  position: fixed;
+  width: 12em;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  margin-left: -6em;
+  margin-top: -6em;
+  color: white;
+  font-weight: bold;
+}
+
+.sign_up_first_name_input{
+  position: fixed;
+  margin-top: -4em;
+}
+
+.sign_up_second_name_input{
+  margin-top: 0em;
+}
+
+.sign_up_username_input{
+  margin-top: 4em;
+}
+
+.sign_up_password_input{
+  margin-top: 8em;
+}
+
+.sign_up_submit_button{
+  margin-top: 12em;
+  height: 3em;
+  width: 16em;
+  font-weight: bold;
+  margin-left: -8em;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+::placeholder{
+  color: white;
+}
+
+.sign_up_input_boxes{
+  background-color:rgba(0, 0, 0, 0);
+  background: rgba(0,0,0,0.30);
+  color: white;
+  font-weight: bold;
+  border: none;
+  width: 16em;
+  outline:none;
+  height:30px;
+}
+
+
+.sign_up_centered{
+  position: fixed;
+  top:50%;
+  left:50%;
+  margin-left: -8em;
+  text-align: center;
+}

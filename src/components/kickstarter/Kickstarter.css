@@ -1,0 +1,65 @@
+.full_page_sky{
+  background-image: url('../image/skyBackground.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: cover;
+}
+
+.login_center_box_kick{
+  background: rgba(0,0,0,.85);
+  top: 50%;
+  left: 50%;
+  margin-top: -25em;
+  margin-left: -30em;
+  width: 60em;
+  height: 50em;
+}
+
+.testing{
+  left: 50%;
+  margin-left: -425px;
+  margin-top: 2.5em;
+}
+
+.center{
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.input_boxes{
+  width: 20em;
+  display: inline-block;
+  orientation: center;
+  margin: 0 auto;
+}
+
+.label{
+  color: white;
+  display: inline-block;
+}
+
+.parent{
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+  text-align: center;
+}
+
+::placeholder{
+  text-align: center;
+}
+
+.center_bottom{
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 4em;
+}
+
+.Link{
+  color: white;
+}
