@@ -40,19 +40,6 @@
   display: inline-block;
 }
 
-.parent{
-  display: flex;
-  flex-direction: column;
-}
-
-::-webkit-input-placeholder { /* Chrome */
-  text-align: center;
-}
-
-::placeholder{
-  text-align: center;
-}
-
 .center_bottom{
   text-align: center;
   margin-right: auto;
@@ -62,4 +49,20 @@
 
 .Link{
   color: white;
+}
+
+.container {
+  font-size: 1em;
+  font-family: sans-serif;
+/*   text-align: center; */
+  max-width: 70%;
+  border-collapse: collapse;
+  margin: 1em auto;
+}
+
+select, input, 
+.select {
+  border-collapse: collapse;
+  padding: 0;
+  width: 12em;
 }

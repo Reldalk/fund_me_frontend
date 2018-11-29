@@ -15,8 +15,7 @@ import {
   HorizontalGridLines,
   VerticalBarSeries,
   VerticalBarSeriesCanvas,
-  Hint,
-  LabelSeries,
+  Hint
 } from 'react-vis';
 
 export default class Kickstarter extends React.Component{
@@ -25,7 +24,7 @@ export default class Kickstarter extends React.Component{
     this.state = {
       database_value : "",
       number_value : 10,
-      data : [],
+      data : [{x: 10, y: 1}],
       category_value: '',
       options: [],
       data_value: 'goal',
@@ -131,42 +130,62 @@ export default class Kickstarter extends React.Component{
     return (
       <div className="full_page_sky">
         <form className="login_center_box_kick login_center_box">
-        <div className="parent">
-          <div className="center">
-            <label className="label">Select your database</label>
-              <select className = "input_boxes" value={this.state.database_value} onChange={e => this.handleChange(e.target.value)}>
-                <option value="">Select your database</option>
-                <option value="Kickstarter">Kickstarter</option>
-                <option value="Indiegogo">Indiegogo</option>
-                <option value="Compare">Compare Them</option>
-              </select>
-          </div>
-            <div className="center">
-              <label className="label">Select your Category</label>
-                <select className="input_boxes" onChange={e => this.handleDataChange(e.target.value)}>
-                {
-                  data_categories_select.map(function(category) {
-                    return <option key={category._id}
-                      value={category.name}>{category.name}</option>;
-                  })
-                }
-              </select>
+          <div className="container">
+            <table cellPadding="0" className="outgrid">
+              <tbody>
+                <tr class="row">
+                  <td>
+                    <label className="label">Select your database</label>
+                  </td>
+                  <td>
+                  <select className = "input_boxes" value={this.state.database_value} onChange={e => this.handleChange(e.target.value)}>
+                    <option value="">Select your database</option>
+                    <option value="Kickstarter">Kickstarter</option>
+                    <option value="Indiegogo">Indiegogo</option>
+                    <option value="Compare">Compare Them</option>
+                  </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label className="label">Select your Category</label>
+                  </td>
+                  <td>
+                    <select className="input_boxes" onChange={e => this.handleDataChange(e.target.value)}>
+                    {
+                      data_categories_select.map(function(category) {
+                        return <option key={category._id}
+                          value={category.name}>{category.name}</option>;
+                      })
+                    }
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label className="label">Select number of entries&nbsp;&nbsp;</label>
+                  </td>
+                  <td>
+                    <input className="input_boxes" type="number" min="0" max="15" value={this.state.number_value} onChange = {e => this.handle_number_change(e.target.value)}></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  <label className="label">Select your category</label>
+                  </td>
+                  <td>
+                  <Select
+                    className="special_box"
+                    value={category_value}
+                    onChange={this.handleCategoryChange}
+                    options={this.state.options}
+                    placeholder="Select your Category"
+                  />
+                  </td>
+                </tr>
+                </tbody>
+              </table>
             </div>
-        <div className="center">
-          <label className="label">Select number of entries</label>
-          <input className="input_boxes" type="number" value={this.state.number_value} onChange = {e => this.handle_number_change(e.target.value)}></input>
-        </div>
-        <div className="center">
-            <label className="label">Select your category</label>
-            <Select
-              className="input_boxes"
-              value={category_value}
-              onChange={this.handleCategoryChange}
-              options={this.state.options}
-              placeholder="Select your Category"
-            />
-        </div>
-      </div>
           <link rel="stylesheet" href="https://unpkg.com/react-vis/dist/style.css"></link>
           <XYPlot className="testing" margin={{left:100}} xType="ordinal" width={100 * this.state.x_value} height={500} xDistance={100}>
           <VerticalGridLines />

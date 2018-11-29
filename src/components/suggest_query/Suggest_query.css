@@ -1,72 +1,63 @@
-.sign_up_center_box{
+.query_center_box{
   position:fixed; /* change this to fixed */
-  top: 50%;
   left: 50%;
-  margin-left: -13em;
-  width: 26em;
-  height: 30em;
-}
-
-.sign_up_text_description{
-  position: fixed;
-  width: 12em;
-  top: 50%;
-  left: 50%;
+  margin-left: -30%;
+  border: 4px solid black;
+  width: 60%;
+  background-color: white;
+  height: 80%;
+  margin-top: 5%;
+  display: block;
   text-align: center;
-  margin-left: -6em;
-  margin-top: -6em;
-  color: white;
-  font-weight: bold;
 }
 
-.sign_up_first_name_input{
-  position: fixed;
-  margin-top: -4em;
+.description_box{
+  height: 40%;
+  width: 80%;
 }
 
-.sign_up_second_name_input{
-  margin-top: 0em;
+.feedback_center{
+  color: black;
+  width: 25%;
+  margin-left: 37.5%;
 }
 
-.sign_up_username_input{
-  margin-top: 4em;
+.Submit_button{
+  width: 15%;
+  height: 5%;
+  margin-left: 42.5%;
+  margin-top: 5%;
+  display: block;
 }
 
-.sign_up_password_input{
-  margin-top: 8em;
+.full_page_sky{
+  background-image: url('../image/skyBackground.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: cover;
 }
 
-.sign_up_submit_button{
-  margin-top: 12em;
-  height: 3em;
-  width: 16em;
-  font-weight: bold;
-  margin-left: -8em;
-  text-align: center;
-  cursor: pointer;
+.title_text{
+  width: 30%;
+  margin-left: 35%;
+  display: block;
+  margin-bottom: 5%;
 }
 
-
-::placeholder{
-  color: white;
+.query_label{
+  display: block;
+  width: 20%;
 }
 
-.sign_up_input_boxes{
-  background-color:rgba(0, 0, 0, 0);
-  background: rgba(0,0,0,0.30);
-  color: white;
-  font-weight: bold;
-  border: none;
-  width: 16em;
-  outline:none;
-  height:30px;
+.top_elements{
+  margin-top: 5%;
 }
 
-
-.sign_up_centered{
-  position: fixed;
-  top:50%;
-  left:50%;
-  margin-left: -8em;
-  text-align: center;
+.back_button{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5%;
+  width: 15%;
 }

@@ -3,6 +3,7 @@ import './Login.css';
 import {reduxForm, Field} from 'redux-form';
 import {withRouter, Link, Redirect} from 'react-router-dom';
 import {authUser} from '../../actions/users';
+import {saveAuthToken, loadAuthToken} from '../../local-storage'
 
 export class Login extends React.Component{
   constructor(props) {
@@ -22,6 +23,8 @@ export class Login extends React.Component{
         })
       }
       else{
+        saveAuthToken(res.authToken);
+        console.log(loadAuthToken);
         this.props.history.push('/dashboard')
       }
     })
