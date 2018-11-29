@@ -133,7 +133,7 @@ export default class Kickstarter extends React.Component{
           <div className="container">
             <table cellPadding="0" className="outgrid">
               <tbody>
-                <tr class="row">
+                <tr className="row">
                   <td>
                     <label className="label">Select your database</label>
                   </td>
