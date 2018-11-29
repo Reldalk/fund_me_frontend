@@ -94,8 +94,8 @@ export default class Kickstarter extends React.Component{
  
   fetch_database(database_value, extra_query, data_value){
     if(database_value !== 'Compare'){
-      console.log(API_BASE_URL + database_value + "?value=" + extra_query + '&data_value=' + data_value)
-      fetch(API_BASE_URL + database_value + "?value=" + extra_query + '&data_value=' + data_value)
+      console.log(API_BASE_URL +'/'+ database_value + "?value=" + extra_query + '&data_value=' + data_value)
+      fetch(API_BASE_URL +'/'+ database_value + "?value=" + extra_query + '&data_value=' + data_value)
       .then(res => res.json()
       )
       .then(repos => {
