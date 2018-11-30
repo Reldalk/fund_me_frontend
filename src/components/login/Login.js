@@ -24,7 +24,6 @@ export class Login extends React.Component{
       }
       else{
         saveAuthToken(res.authToken);
-        console.log(loadAuthToken);
         this.props.history.push('/dashboard')
       }
     })

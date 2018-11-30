@@ -5,16 +5,18 @@ import {setCategory} from './data/dataCategories'
 import './Kickstarter.css'
 import {fetch_database} from '../../actions/fetch_database'
 import {Link} from 'react-router-dom';
+import {clearAuthToken, loadAuthToken} from '../../local-storage'
+import * as d3 from 'd3-format'
 
 import {
-  XYPlot,
   XAxis,
   YAxis,
   VerticalGridLines,
   HorizontalGridLines,
   VerticalBarSeries,
   VerticalBarSeriesCanvas,
-  Hint
+  Hint,
+  FlexibleXYPlot,
 } from 'react-vis';
 
 export default class Kickstarter extends React.Component{
@@ -23,12 +25,23 @@ export default class Kickstarter extends React.Component{
     this.state = {
       database_value : "",
       number_value : 10,
-      data : [{x: 10, y: 1}],
+      data : [{x: 0, y: 0}],
       category_value: '',
       options: [],
-      data_value: 'goal',
+      data_value: 'backers_count',
       hoveredCell: false
     };
+  }
+
+  componentWillMount() {
+    this.checkAuth();
+  }
+
+  checkAuth() {
+    console.log(loadAuthToken);
+    if (!loadAuthToken()) {
+      this.props.history.push('/')
+    }
   }
 
   handleCategoryChange = (category_value) => {
@@ -65,13 +78,10 @@ export default class Kickstarter extends React.Component{
           options : indiegogo
         })
       }
-      else if(database_value === 'Compare')
-      {
-        this.setState({
-          options : compare
-        })
-      }
-        fetch_database(database_value, "", this.state.data_value)
+      this.setState({
+        data_value : setCategory(database_value)[0].value
+      })
+        fetch_database(database_value, "", setCategory(database_value)[0].value)
         .then( res => {
           this.setState({
             data : res
@@ -108,22 +118,32 @@ export default class Kickstarter extends React.Component{
       alignItems: 'center',
       padding: '5px'
     };
+    const dict_names = {
+      'backers_count' : 'Total Backers: ',
+      'goal' : 'Project Goal: $',
+      'usd_pledged' : 'Total USD Pledged: $'
+    }   
     const {hoveredCell } = this.state;
     const {useCanvas} = this.state;
     const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
     const array = this.state.data.slice(0, this.state.number_value);
     return (
-      <div>
+      <div className="graph_container">
         <link rel="stylesheet" href="https://unpkg.com/react-vis/dist/style.css"></link>
-          <XYPlot className="testing" margin={{left:100}} xType="ordinal" width={800} height={500} xDistance={100}>
+          <FlexibleXYPlot margin={{left:45}}  className="testing" xType="ordinal">
           <VerticalGridLines />
           <HorizontalGridLines />
           <XAxis style={{ticks: {stroke: 'white', fontSize: '12px'}}}/>
-          <YAxis style={{ticks: {stroke: "white", fontSize: '12px'}}}/>
+          <YAxis tickFormat={tick => d3.format('.2s')(tick)} style={{ticks: {stroke: "white", fontSize: '12px'}}}/>
           <BarSeries data={array}
             onValueMouseOver={ v => {
               this.setState({hoveredCell: v});
             }}
+            onTouchStart={ v => {
+              console.log('test');
+              this.setState({hoveredCell: v});
+            }}
+            onTouchEnd={v => this.setState({hoveredCell: false})}
             onValueMouseOut={v => this.setState({hoveredCell: false})}
             onValueClick={(datapoint, event)=>{
               window.open(datapoint.url, '_blank')
@@ -132,27 +152,34 @@ export default class Kickstarter extends React.Component{
             <Hint value={hoveredCell}>
               <div style={tipStyle}>
                 {hoveredCell.name}
+                <br/>
+                {dict_names[this.state.data_value]}{hoveredCell.y}
               </div>
             </Hint>
           )}
-        </XYPlot> 
+        </FlexibleXYPlot> 
       </div>
     )
   }
 
   render() 
   { 
-    const { category_value, hoveredCell } = this.state;
+    const { category_value} = this.state;
     const data_categories_select = setCategory(this.state.database_value);
     return (
       <div className="full_page_sky">
-        <form className="login_center_box_kick login_center_box">
+      <div className="logout_box">
+        <Link to='/'>
+          <button onClick={clearAuthToken} className="logout">Logout</button>
+        </Link>
+      </div>
+        <form className="login_center_box_kick">
           <div className="container">
-            <table cellPadding="0" className="outgrid">
+            <table cellPadding="0" className="table">
               <tbody>
                 <tr className="row">
-                  <td>
-                    <label className="label">Select your database</label>
+                  <td className="labelData">
+                    <label className="label">Database</label>
                   </td>
                   <td>
                   <select className = "input_boxes" value={this.state.database_value} onChange={e => this.handleChange(e.target.value)}>
@@ -165,14 +192,14 @@ export default class Kickstarter extends React.Component{
                 </tr>
                 <tr>
                   <td>
-                    <label className="label">Select your Category</label>
+                    <label className="label">Category</label>
                   </td>
                   <td>
                     <select className="input_boxes" onChange={e => this.handleDataChange(e.target.value)}>
                     {
                       data_categories_select.map(function(category) {
                         return <option key={category._id}
-                          value={category.name}>{category.name}</option>;
+                          value={category.value}>{category.name}</option>;
                       })
                     }
                     </select>
@@ -180,7 +207,7 @@ export default class Kickstarter extends React.Component{
                 </tr>
                 <tr>
                   <td>
-                    <label className="label">Select number of entries&nbsp;&nbsp;</label>
+                    <label className="label"># entries</label>
                   </td>
                   <td>
                     <input className="input_boxes" type="number" min="0" max="15" value={this.state.number_value} onChange = {e => this.handle_number_change(e.target.value)}></input>
@@ -188,7 +215,7 @@ export default class Kickstarter extends React.Component{
                 </tr>
                 <tr>
                   <td>
-                  <label className="label">Select your category</label>
+                  <label className="label">Category</label>
                   </td>
                   <td>
                   <Select
@@ -205,7 +232,7 @@ export default class Kickstarter extends React.Component{
             </div>
             {this.single_bar_graph()}
         <div className="center_bottom">
-        <Link className = "Link"to="/suggest_query">Click here to suggest a new database Query!</Link>
+        <Link className = "Link"to="/suggest_query">Click here to suggest a new Query!</Link>
         </div>
         </form>
       </div>
