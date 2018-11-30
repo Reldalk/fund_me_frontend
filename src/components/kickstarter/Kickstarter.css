@@ -30,9 +30,12 @@
 
 .input_boxes{
   width: 20em;
+  height: 2.5em;
   display: inline-block;
   orientation: center;
   margin: 0 auto;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .label{
@@ -44,7 +47,7 @@
   text-align: center;
   margin-right: auto;
   margin-left: auto;
-  padding-top: 4em;
+  padding-top: 1.5em;
 }
 
 .Link{
@@ -65,4 +68,8 @@ select, input,
   border-collapse: collapse;
   padding: 0;
   width: 12em;
+}
+
+.special_box{
+  border: 1px solid black;
 }

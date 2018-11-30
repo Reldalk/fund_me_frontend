@@ -1,10 +1,9 @@
 import React from 'react';
 import Select from 'react-select'
-import {kickstarter, indiegogo, compare} from './categories'
-import {parse} from './parse'
-import {setCategory} from './dataCategories'
+import {kickstarter, indiegogo, compare} from './data/categories'
+import {setCategory} from './data/dataCategories'
 import './Kickstarter.css'
-import {API_BASE_URL} from '../../config';
+import {fetch_database} from '../../actions/fetch_database'
 import {Link} from 'react-router-dom';
 
 import {
@@ -28,7 +27,6 @@ export default class Kickstarter extends React.Component{
       category_value: '',
       options: [],
       data_value: 'goal',
-      x_value: 8,
       hoveredCell: false
     };
   }
@@ -38,12 +36,13 @@ export default class Kickstarter extends React.Component{
     this.setState({ category_value });
     if(this.state.database_value !== ""){
       console.log('this is A TEST ' + category_value.value)
-      this.fetch_database(this.state.database_value, category_value.value, this.state.data_value)
+      fetch_database(this.state.database_value, category_value.value, this.state.data_value)
+      .then( res => {
+        this.setState({
+          data : res
+        })
+      })
     }
-  }
-
-  onClickFunction = (e) => {
-    this.handleClick();
   }
 
   handleChange(database_value){
@@ -72,7 +71,12 @@ export default class Kickstarter extends React.Component{
           options : compare
         })
       }
-      this.fetch_database(database_value, "", this.state.data_value)
+        fetch_database(database_value, "", this.state.data_value)
+        .then( res => {
+          this.setState({
+            data : res
+          })
+        })
     }
   }
 
@@ -81,8 +85,12 @@ export default class Kickstarter extends React.Component{
       {data_value}
     )
     if(this.state.database_value !== ""){
-      console.log('this is a test '+ this.state.category_value);
-      this.fetch_database(this.state.database_value, this.state.category_value.value || "", data_value)
+      fetch_database(this.state.database_value, this.state.category_value.value || "", data_value)
+      .then(res => {
+        this.setState({
+          data : res
+        })
+      })
     }
   }
 
@@ -91,30 +99,8 @@ export default class Kickstarter extends React.Component{
       number_value : value
     })
   }
- 
-  fetch_database(database_value, extra_query, data_value){
-    if(database_value !== 'Compare'){
-      console.log(API_BASE_URL +'/'+ database_value + "?value=" + extra_query + '&data_value=' + data_value)
-      fetch(API_BASE_URL +'/'+ database_value + "?value=" + extra_query + '&data_value=' + data_value)
-      .then(res => res.json()
-      )
-      .then(repos => {
-        console.log(repos);
-        this.setState({
-          data : parse(repos, data_value)
-        })
-      })
-    }
-  }
 
-  handle_x_value_change(x_value){
-    this.setState({
-      x_value
-    })
-  }
-  
-  render() 
-  { 
+  single_bar_graph(){
     const tipStyle = {
       display: 'flex',
       color: 'white',
@@ -122,10 +108,41 @@ export default class Kickstarter extends React.Component{
       alignItems: 'center',
       padding: '5px'
     };
-    const { category_value, hoveredCell } = this.state;
+    const {hoveredCell } = this.state;
     const {useCanvas} = this.state;
     const BarSeries = useCanvas ? VerticalBarSeriesCanvas : VerticalBarSeries;
     const array = this.state.data.slice(0, this.state.number_value);
+    return (
+      <div>
+        <link rel="stylesheet" href="https://unpkg.com/react-vis/dist/style.css"></link>
+          <XYPlot className="testing" margin={{left:100}} xType="ordinal" width={800} height={500} xDistance={100}>
+          <VerticalGridLines />
+          <HorizontalGridLines />
+          <XAxis style={{ticks: {stroke: 'white', fontSize: '12px'}}}/>
+          <YAxis style={{ticks: {stroke: "white", fontSize: '12px'}}}/>
+          <BarSeries data={array}
+            onValueMouseOver={ v => {
+              this.setState({hoveredCell: v});
+            }}
+            onValueMouseOut={v => this.setState({hoveredCell: false})}
+            onValueClick={(datapoint, event)=>{
+              window.open(datapoint.url, '_blank')
+            }}/>
+          {hoveredCell && (
+            <Hint value={hoveredCell}>
+              <div style={tipStyle}>
+                {hoveredCell.name}
+              </div>
+            </Hint>
+          )}
+        </XYPlot> 
+      </div>
+    )
+  }
+
+  render() 
+  { 
+    const { category_value, hoveredCell } = this.state;
     const data_categories_select = setCategory(this.state.database_value);
     return (
       <div className="full_page_sky">
@@ -142,7 +159,7 @@ export default class Kickstarter extends React.Component{
                     <option value="">Select your database</option>
                     <option value="Kickstarter">Kickstarter</option>
                     <option value="Indiegogo">Indiegogo</option>
-                    <option value="Compare">Compare Them</option>
+                    {/*<option value="Compare">Compare Them</option>*/}
                   </select>
                   </td>
                 </tr>
@@ -186,28 +203,7 @@ export default class Kickstarter extends React.Component{
                 </tbody>
               </table>
             </div>
-          <link rel="stylesheet" href="https://unpkg.com/react-vis/dist/style.css"></link>
-          <XYPlot className="testing" margin={{left:100}} xType="ordinal" width={100 * this.state.x_value} height={500} xDistance={100}>
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis style={{ticks: {stroke: 'white', fontSize: '12px'}}}/>
-          <YAxis style={{ticks: {stroke: "white", fontSize: '12px'}}}/>
-          <BarSeries data={array}
-            onValueMouseOver={ v => {
-              this.setState({hoveredCell: v});
-            }}
-            onValueMouseOut={v => this.setState({hoveredCell: false})}
-            onValueClick={(datapoint, event)=>{
-              window.open(datapoint.url, '_blank')
-            }}/>
-          {hoveredCell && (
-            <Hint value={hoveredCell}>
-              <div style={tipStyle}>
-                {hoveredCell.name}
-              </div>
-            </Hint>
-          )}
-        </XYPlot> 
+            {this.single_bar_graph()}
         <div className="center_bottom">
         <Link className = "Link"to="/suggest_query">Click here to suggest a new database Query!</Link>
         </div>
