@@ -6,6 +6,7 @@ import {submitQuery} from '../../actions/submit_query';
 import {withRouter} from 'react-router-dom';
 import {loadAuthToken, clearAuthToken} from '../../local-storage'
 
+let i = 1;
 export class Suggest_query extends Component{
   constructor(props) {
     super(props);
@@ -26,6 +27,25 @@ export class Suggest_query extends Component{
     }
   }
 
+  returnNumber(number){
+    if(number > 10){
+      return 'way too many '
+    }
+    if(number % 10 === 1){
+      return number + 'st '
+    }
+    else if(number % 10 === 2){
+      return number + 'nd '
+    }
+    else if (number % 10 === 3){
+      return number + 'rd '
+    }
+    else
+    {
+      return number+'th '
+    }
+  }
+
   onSubmit(e) {
     const query_info = {title: e.target.title_text.value, description: e.target.description_text.value};
     console.log(query_info)
@@ -38,8 +58,9 @@ export class Suggest_query extends Component{
       }
       else{
         this.setState({
-          feedback: 'query submission successful'
+          feedback: this.returnNumber(i) +  'queries submitted'
         })
+        i+=1
       }
     })
   }
@@ -62,11 +83,12 @@ render(){
           <p className="feedback_center">{this.state.feedback}</p>
         <div className="top_elements">
           <label className="query_label_one">Query title (What is it?)</label>
-          <input type="text" name="title_text" className="title_text"></input>
+          <input type="text" value="example: Total Backers" name="title_text" className="title_text"></input>
         </div>
         <div className="bottom_elements">
           <label className="query_block">Query Description (What's it do?)</label>
-          <textarea hint="text" name="description_text" className="description_box"></textarea>
+          <textarea name="description_text" className="description_box">
+          Example: This will be a query which displays the total Backers for different fields and categories of the kickstarter and indiegogo database</textarea>
         </div>
         <button type="submit" className="Submit_button">Submit</button>
         <Link to="/dashboard">
