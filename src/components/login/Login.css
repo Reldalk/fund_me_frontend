@@ -8,6 +8,8 @@
   height: 30em;
 }
 
+
+
 .login_input_boxes{
   background-color:rgba(0, 0, 0, 0);
   color: white;
@@ -28,6 +30,35 @@
   color: white;
 }
 
+.title_text{
+  font-size: 5em;
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+.title_description
+{
+  color: white;
+  font-size: 3em;
+  display: block;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .title_text{
+    font-size: 2.1em;
+    font-weight: bold;
+  }
+  .title_description{
+    font-size: 2em;
+  }
+}
+
+
+.title_box{
+  text-align: center;
+}
 
 .login_centered{
   position: fixed;

@@ -60,6 +60,8 @@ export class Suggest_query extends Component{
         this.setState({
           feedback: this.returnNumber(i) +  'queries submitted'
         })
+        document.getElementById('desc').value = "";
+        document.getElementById('title').value = "";
         i+=1
       }
     })
@@ -83,11 +85,11 @@ render(){
           <p className="feedback_center">{this.state.feedback}</p>
         <div className="top_elements">
           <label className="query_label_one">Query title (What is it?)</label>
-          <input type="text" value="example: Total Backers" name="title_text" className="title_text"></input>
+          <input id="title" type="text" value="example: Total Backers" name="title_text" className="title_text_query"></input>
         </div>
         <div className="bottom_elements">
           <label className="query_block">Query Description (What's it do?)</label>
-          <textarea name="description_text" className="description_box">
+          <textarea id="desc" name="description_text" className="description_box_query">
           Example: This will be a query which displays the total Backers for different fields and categories of the kickstarter and indiegogo database</textarea>
         </div>
         <button type="submit" className="Submit_button">Submit</button>

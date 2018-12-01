@@ -50,6 +50,10 @@ export class Login extends React.Component{
   render(){
     return (
       <div className="full_page">
+        <div className="title_box">
+          <label className="title_text">Fund me comparisons</label>
+          <label className="title_description">Compare kickstarter vs Indiegogo</label>
+        </div>
         <form className="login_center_box" onSubmit={(e)=>{
           e.preventDefault();
           this.onSubmit(e);

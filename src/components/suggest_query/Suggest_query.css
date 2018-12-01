@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-.description_box{
+.description_box_query{
   height: 80%;
   width: 80%;
   margin-left: 10%;
@@ -44,7 +44,7 @@
   background-size: cover;
 }
 
-.title_text{
+.title_text_query{
   width: 80%;
   margin-left: 10%;
   display: block;
