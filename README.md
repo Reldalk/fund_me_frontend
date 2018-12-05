@@ -44,3 +44,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ### BackEnd file location
+You can view the backend server at https://github.com/Reldalk/fund_me_backend
+
+### Heroku hosted site
+You can view a live version of the site at https://fund-me-app.herokuapp.com/
