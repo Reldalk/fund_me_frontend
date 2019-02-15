@@ -2,7 +2,7 @@
 http://jonathongarrett.com/fund_me
 
 ## Tech Stack
-Fund Me Comparison server is powered by the following,
+Fund Me Comparison is powered by the following,
 * React
 * Redux
 * React-vis
